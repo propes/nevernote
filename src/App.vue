@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import NoteViewer from "./components/NoteViewer.vue";
+import NoteViewer from "./components/NoteViewerLocalData.vue";
 
 export default {
   name: "App",

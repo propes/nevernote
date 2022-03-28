@@ -7,7 +7,10 @@
     <div>
       <ul class="note-list">
         <li v-for="note in notes" :key="note.name">
-          {{ note.name }}
+          <div>
+            {{ note.name }}
+          </div>
+          <button @click="deleteNote(note.name)">delete</button>
         </li>
       </ul>
     </div>
@@ -30,6 +33,13 @@ export default {
   methods: {
     saveNote() {
       this.notes.push({ name: this.newNote });
+      this.newNote = "";
+    },
+    deleteNote(name) {
+      const i = this.notes.findIndex((n) => n.name === name);
+      if (i >= 0) {
+        this.notes.splice(i, 1);
+      }
     },
   },
 };
