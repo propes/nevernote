@@ -5,7 +5,7 @@
     </div>
 
     <div class="note-viewer-container">
-      <div class="mr-2">
+      <div class="left-panel mr-2">
         <div class="mb-2 flex-align-right">
           <button @click="createNote">new</button>
         </div>
@@ -29,12 +29,12 @@
           </ul>
         </div>
       </div>
-      <div>
+      <div class="right-panel">
         <div>
-          <input type="text" v-model="currentNote.title" />
+          <input class="form-input" type="text" v-model="currentNote.title" />
         </div>
-        <div>
-          <textarea v-model="currentNote.content"></textarea>
+        <div class="editor">
+          <textarea class="form-input" v-model="currentNote.content"></textarea>
         </div>
         <div class="flex-align-right">
           <button @click="saveNote">Save</button>
@@ -92,9 +92,21 @@ export default {
   display: flex;
 }
 
+.left-panel {
+  min-width: 200px;
+}
+
+.right-panel {
+  min-width: 400px;
+}
+
+.form-input {
+  width: 100%;
+  margin-bottom: 0.2em;
+}
+
 .list-view {
   margin: 0;
-  min-width: 200px;
 
   ul {
     margin: 0;
@@ -111,6 +123,13 @@ export default {
     &:hover {
       background-color: whitesmoke;
     }
+  }
+}
+
+.editor {
+  textarea {
+    min-height: 300px;
+    resize: none;
   }
 }
 
