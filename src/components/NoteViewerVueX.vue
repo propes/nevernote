@@ -5,11 +5,11 @@
     </div>
 
     <div class="note-viewer-container">
-      <div class="note-selector">
+      <div class="list-view">
         <ul>
           <li v-for="note in notes" :key="note.id">
-            <div class="note-selector-item">
-              <div class="note-selector-item-title">
+            <div class="list-view-item" @click="selectNote(note)">
+              <div class="pr-2">
                 <div>{{ note.title }}</div>
                 <div>
                   <small>{{ note.contentPreview }}</small>
@@ -55,8 +55,7 @@ export default {
     notes() {
       return this.$store.state.notes.map((n) => {
         return {
-          id: n.id,
-          title: n.title,
+          ...n,
           contentPreview: previewString(n.content),
         };
       });
@@ -67,6 +66,12 @@ export default {
       this.currentNote = {
         title: "",
         content: "",
+      };
+    },
+    selectNote(note) {
+      this.currentNote = {
+        title: note.title,
+        content: note.content,
       };
     },
     saveNote() {
@@ -86,7 +91,7 @@ export default {
   display: flex;
 }
 
-.note-selector {
+.list-view {
   margin: 0;
   padding-right: 10px;
   min-width: 200px;
@@ -97,13 +102,15 @@ export default {
     list-style: none;
   }
 
-  .note-selector-item {
+  &-item {
+    padding: 0.1em;
     display: flex;
     justify-content: space-between;
-  }
+    cursor: pointer;
 
-  .note-selector-item-title {
-    padding-right: 10px;
+    &:hover {
+      background-color: whitesmoke;
+    }
   }
 }
 
