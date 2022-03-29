@@ -5,33 +5,38 @@
     </div>
 
     <div class="note-viewer-container">
-      <div class="list-view">
-        <ul>
-          <li v-for="note in notes" :key="note.id">
-            <div class="list-view-item" @click="selectNote(note)">
-              <div class="pr-2">
-                <div>{{ note.title }}</div>
+      <div class="mr-2">
+        <div class="mb-2 flex-align-right">
+          <button @click="createNote">new</button>
+        </div>
+        <div class="list-view">
+          <ul>
+            <li v-for="note in notes" :key="note.id">
+              <div class="list-view-item" @click="selectNote(note)">
+                <div class="pr-2">
+                  <div>{{ note.title }}</div>
+                  <div>
+                    <small>{{ note.contentPreview }}</small>
+                  </div>
+                </div>
                 <div>
-                  <small>{{ note.contentPreview }}</small>
+                  <button @click="deleteNote(note.id)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
                 </div>
               </div>
-              <div>
-                <button @click="deleteNote(note.id)">
-                  <i class="fa-solid fa-trash-can"></i>
-                </button>
-              </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="note-editor">
+      <div>
         <div>
           <input type="text" v-model="currentNote.title" />
         </div>
         <div>
           <textarea v-model="currentNote.content"></textarea>
         </div>
-        <div class="action-bar">
+        <div class="flex-align-right">
           <button @click="saveNote">Save</button>
         </div>
       </div>
@@ -49,7 +54,7 @@ export default {
     };
   },
   created() {
-    this.resetCurrentNote();
+    this.createNote();
   },
   computed: {
     notes() {
@@ -62,7 +67,7 @@ export default {
     },
   },
   methods: {
-    resetCurrentNote() {
+    createNote() {
       this.currentNote = {
         title: "",
         content: "",
@@ -72,7 +77,6 @@ export default {
       this.currentNote = { ...note };
     },
     saveNote() {
-      console.log(this.currentNote);
       this.$store.commit("saveNote", this.currentNote);
     },
     deleteNote(id) {
@@ -90,7 +94,6 @@ export default {
 
 .list-view {
   margin: 0;
-  padding-right: 10px;
   min-width: 200px;
 
   ul {
@@ -111,10 +114,7 @@ export default {
   }
 }
 
-.note-editor {
-}
-
-.action-bar {
+.flex-align-right {
   display: flex;
   justify-content: flex-end;
 }
