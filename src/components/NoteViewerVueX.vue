@@ -69,14 +69,11 @@ export default {
       };
     },
     selectNote(note) {
-      this.currentNote = {
-        title: note.title,
-        content: note.content,
-      };
+      this.currentNote = { ...note };
     },
     saveNote() {
-      this.$store.commit("addNote", this.currentNote);
-      this.resetCurrentNote();
+      console.log(this.currentNote);
+      this.$store.commit("saveNote", this.currentNote);
     },
     deleteNote(id) {
       this.$store.commit("deleteNote", id);

@@ -18,11 +18,17 @@ export default createStore({
   },
   getters: {},
   mutations: {
-    addNote: (state, note) => {
-      if (!note.title) {
-        note.title = "Untitled";
+    saveNote: (state, note) => {
+      if (note.id) {
+        const storedNote = state.notes.find((n) => n.id === note.id);
+        storedNote.title = note.title;
+        storedNote.content = note.content;
+      } else {
+        if (!note.title) {
+          note.title = "Untitled";
+        }
+        state.notes.push({ id: uuid.v1(), ...note });
       }
-      state.notes.push({ id: uuid.v1(), ...note });
     },
     deleteNote: (state, id) => {
       const i = state.notes.findIndex((n) => n.id === id);
