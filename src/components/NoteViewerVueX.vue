@@ -9,8 +9,8 @@
         <ul>
           <li v-for="note in notes" :key="note.id">
             <div class="note-selector-item">
-              <div class="note-selector-item-name">
-                {{ note.name }}
+              <div class="note-selector-item-title">
+                {{ note.title }}
               </div>
               <button @click="deleteNote(note.id)">
                 <i class="fa-solid fa-trash-can"></i>
@@ -21,7 +21,10 @@
       </div>
       <div class="note-editor">
         <div>
-          <textarea v-model="newNote"></textarea>
+          <input type="text" v-model="currentNote.title" />
+        </div>
+        <div>
+          <textarea v-model="currentNote.content"></textarea>
         </div>
         <div class="action-bar">
           <button @click="saveNote">Save</button>
@@ -35,8 +38,11 @@
 export default {
   data() {
     return {
-      newNote: "",
+      currentNote: null,
     };
+  },
+  created() {
+    this.resetCurrentNote();
   },
   computed: {
     notes() {
@@ -44,9 +50,15 @@ export default {
     },
   },
   methods: {
+    resetCurrentNote() {
+      this.currentNote = {
+        title: "",
+        content: "",
+      };
+    },
     saveNote() {
-      this.$store.commit("addNote", this.newNote);
-      this.newNote = "";
+      this.$store.commit("addNote", this.currentNote);
+      this.resetCurrentNote();
     },
     deleteNote(id) {
       this.$store.commit("deleteNote", id);
@@ -77,7 +89,7 @@ export default {
     justify-content: space-between;
   }
 
-  .note-selector-item-name {
+  .note-selector-item-title {
     padding-right: 10px;
   }
 }

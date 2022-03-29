@@ -4,14 +4,25 @@ import { uuid } from "vue-uuid";
 export default createStore({
   state: {
     notes: [
-      { id: uuid.v1(), name: "My first note" },
-      { id: uuid.v1(), name: "My second note" },
+      {
+        id: uuid.v1(),
+        title: "My to do list",
+        content: "- Walk the dog\n- Wash the cat",
+      },
+      {
+        id: uuid.v1(),
+        title: "Random thoughts",
+        content: "Would a rose by any other name would smell as sweet?",
+      },
     ],
   },
   getters: {},
   mutations: {
-    addNote: (state, name) => {
-      state.notes.push({ id: uuid.v1(), name: name });
+    addNote: (state, note) => {
+      if (!note.title) {
+        note.title = "Untitled";
+      }
+      state.notes.push({ id: uuid.v1(), ...note });
     },
     deleteNote: (state, id) => {
       const i = state.notes.findIndex((n) => n.id === id);
