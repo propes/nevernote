@@ -10,11 +10,16 @@
           <li v-for="note in notes" :key="note.id">
             <div class="note-selector-item">
               <div class="note-selector-item-title">
-                {{ note.title }}
+                <div>{{ note.title }}</div>
+                <div>
+                  <small>{{ note.contentPreview }}</small>
+                </div>
               </div>
-              <button @click="deleteNote(note.id)">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
+              <div>
+                <button @click="deleteNote(note.id)">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
             </div>
           </li>
         </ul>
@@ -35,6 +40,8 @@
 </template>
 
 <script>
+import { previewString } from "../utils/stringUtils";
+
 export default {
   data() {
     return {
@@ -46,7 +53,13 @@ export default {
   },
   computed: {
     notes() {
-      return this.$store.state.notes;
+      return this.$store.state.notes.map((n) => {
+        return {
+          id: n.id,
+          title: n.title,
+          contentPreview: previewString(n.content),
+        };
+      });
     },
   },
   methods: {
