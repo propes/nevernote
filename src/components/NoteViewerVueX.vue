@@ -12,7 +12,9 @@
               <div class="note-selector-item-name">
                 {{ note.name }}
               </div>
-              <button @click="deleteNote(note.id)">del</button>
+              <button @click="deleteNote(note.id)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
             </div>
           </li>
         </ul>
