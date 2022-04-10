@@ -9,25 +9,11 @@
         <div class="mb-2 flex-align-right">
           <button @click="createNote">new</button>
         </div>
-        <div class="list-view">
-          <ul>
-            <li v-for="note in notes" :key="note.id">
-              <div class="list-view-item" @click="selectNote(note)">
-                <div class="pr-2">
-                  <div>{{ note.title }}</div>
-                  <div>
-                    <small>{{ note.contentPreview }}</small>
-                  </div>
-                </div>
-                <div>
-                  <button @click="deleteNote(note.id)">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <ListView
+          :notes="notes"
+          @select-note="selectNote"
+          @delete-note="deleteNote"
+        />
       </div>
       <div class="right-panel">
         <div>
@@ -45,9 +31,13 @@
 </template>
 
 <script>
+import ListView from "./ListView.vue";
+
 import { previewString } from "../utils/stringUtils";
 
 export default {
+  name: "NoteViewerVueX",
+  components: { ListView },
   data() {
     return {
       currentNote: null,
@@ -81,6 +71,7 @@ export default {
     },
     deleteNote(id) {
       this.$store.commit("deleteNote", id);
+      this.createNote();
     },
   },
 };
