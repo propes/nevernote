@@ -44,6 +44,9 @@ export default createStore({
       }
     },
   },
-  actions: {},
+  actions: {
+    saveNote: (context, note) => context.commit("saveNote", note),
+    deleteNote: (context, id) => context.commit("deleteNote", id),
+  },
   modules: {},
 });

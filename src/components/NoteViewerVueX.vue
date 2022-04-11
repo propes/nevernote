@@ -82,12 +82,12 @@ export default {
     selectNote(note) {
       this.currentNote = { ...note };
     },
-    saveNote() {
-      this.$store.commit("saveNote", this.currentNote);
+    async saveNote() {
+      await this.$store.dispatch("saveNote", this.currentNote);
       this.currentNote = this.getNote(this.currentNote.id);
     },
-    deleteNote(id) {
-      this.$store.commit("deleteNote", id);
+    async deleteNote(id) {
+      await this.$store.dispatch("deleteNote", id);
       this.createNote();
     },
     getNote(id) {
