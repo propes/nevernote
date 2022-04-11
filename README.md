@@ -1,34 +1,25 @@
 # nevernote
 
-## Project setup
-```
+A cloud-based notetaking web app written using Vue.
+
+## Project usage
+
+```sh
+# Install packages
 yarn install
-```
 
-### Compiles and hot-reloads for development
-```
+# Compile and hot-reload for development
 yarn serve
-```
 
-### Compiles and minifies for production
-```
+# Compile and minify for production
 yarn build
-```
 
-### Run your unit tests
-```
+# Run unit tests
 yarn test:unit
-```
 
-### Run your end-to-end tests
-```
+# Run end-to-end tests
 yarn test:e2e
-```
 
-### Lints and fixes files
-```
+# Run linter and fix files
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
