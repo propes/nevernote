@@ -17,6 +17,12 @@
       </div>
       <div class="right-panel">
         <div>
+          <small class="mr-2"
+            >Created Date: {{ currentNote.createdDateFormatted }}</small
+          >
+          <small>Modified Date: {{ currentNote.modifiedDateFormatted }}</small>
+        </div>
+        <div>
           <input class="form-input" type="text" v-model="currentNote.title" />
         </div>
         <div class="editor">
@@ -31,6 +37,9 @@
 </template>
 
 <script>
+import moment from "moment";
+import { uuid } from "vue-uuid";
+
 import ListView from "./ListView.vue";
 
 import { previewString } from "../utils/stringUtils";
@@ -52,6 +61,12 @@ export default {
         return {
           ...n,
           contentPreview: previewString(n.content),
+          createdDateFormatted: moment(n.createdDate).format(
+            "DD MMM yy HH:mm:ss"
+          ),
+          modifiedDateFormatted: moment(n.modifiedDate).format(
+            "DD MMM yy HH:mm:ss"
+          ),
         };
       });
     },
@@ -59,6 +74,7 @@ export default {
   methods: {
     createNote() {
       this.currentNote = {
+        id: uuid.v1(),
         title: "",
         content: "",
       };
@@ -68,10 +84,14 @@ export default {
     },
     saveNote() {
       this.$store.commit("saveNote", this.currentNote);
+      this.currentNote = this.getNote(this.currentNote.id);
     },
     deleteNote(id) {
       this.$store.commit("deleteNote", id);
       this.createNote();
+    },
+    getNote(id) {
+      return this.notes.find((n) => n.id === id);
     },
   },
 };

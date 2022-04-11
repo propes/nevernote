@@ -2,7 +2,7 @@
   <div class="list-view">
     <ul>
       <li v-for="note in notes" :key="note.id">
-        <div class="list-view-item">
+        <div class="list-view-item mb-1">
           <div class="list-view-item-title pr-2" @click="selectNote(note)">
             <div>{{ note.title }}</div>
             <div>

@@ -8,26 +8,33 @@ export default createStore({
         id: uuid.v1(),
         title: "My to do list",
         content: "- Walk the dog\n- Wash the cat",
+        createdDate: new Date().toISOString(),
+        modifiedDate: new Date().toISOString(),
       },
       {
         id: uuid.v1(),
         title: "Random thoughts",
         content: "Would a rose by any other name would smell as sweet?",
+        createdDate: new Date().toISOString(),
+        modifiedDate: new Date().toISOString(),
       },
     ],
   },
   getters: {},
   mutations: {
     saveNote: (state, note) => {
-      if (note.id) {
-        const storedNote = state.notes.find((n) => n.id === note.id);
+      const storedNote = state.notes.find((n) => n.id === note.id);
+      if (storedNote) {
         storedNote.title = note.title;
         storedNote.content = note.content;
+        storedNote.modifiedDate = new Date().toISOString();
       } else {
         if (!note.title) {
           note.title = "Untitled";
         }
-        state.notes.push({ id: uuid.v1(), ...note });
+        note.createdDate = new Date().toISOString();
+        note.modifiedDate = new Date().toISOString();
+        state.notes.push({ ...note });
       }
     },
     deleteNote: (state, id) => {
